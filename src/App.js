@@ -1,40 +1,27 @@
 import React, {useState, useEffect} from "react";
-import {Switch, Route, Link} from 'react-router-dom';
+import {Switch, Route, NavLink, useHistory} from 'react-router-dom';
 import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
+import CharacterList from './components/CharacterList';
 
 import axios from 'axios';
 
 import styled from 'styled-components';
 
-
 const NAV = styled.div`
 `;
 
-const NAVIGATE = styled.button`
-  font-family: 'Letter Gothic', sans-serif;
-  text-transform: uppercase;
-  word-spaceing: -.3rem;
-  opacity: 70%;
-  background-color: inherit;
-  :hover, :active {
-    opacity: 100%;
-  }
-  padding: .5rem;
-  border: none;
-`;
-
 export default function App() {
+  const history = useHistory();
   const baseURL = 'https://rickandmortyapi.com/api/';
-  // const baseURL = 'https://rick-api.herokuapp.com/api/';
+  // const baseURL = 'https://rick-api.herokuapp.com/api/'; // backup URL
   const [currentPage, setCurrentPage] = useState("Home");
-  // const currentPageNav = document.getElementById(`nav-${currentPage}`);
+  const [componentState, setComponentState] = useState({});
   const [navInfo, setNavInfo] = useState({
     characters: '',
     locations: '',
     episodes: ''
   });
-
   useEffect(()=> {
     axios.get(baseURL)
     .then(function (response) {
@@ -50,28 +37,40 @@ export default function App() {
       console.log("finally");
       // always executed
     });
+    return ()=>"goodbye!";
   }, []);  
-
-
+  const historyBook = {
+    home: "/",
+    characters: "/characters"
+  }
   useEffect(() => {
-    console.log(currentPage);    
+    console.log(currentPage);
+    history.push(historyBook[currentPage] || "/");
   }, [currentPage]);
 
   return (
     <main>
       <NAV id="navbar">
-        {<NAVIGATE id={`nav-home`} onClick={() =>setCurrentPage("home")} key="nav-home"><Link to="/">Home</Link></NAVIGATE>}
-        {Object.keys(navInfo).map((key) => <NAVIGATE onClick={() =>setCurrentPage(key)} id={`nav-${key}`} key={`nav-${key}`}><Link to={`/${key}`}>{key}</Link></NAVIGATE>)}
+        {<NavLink className="navlink" onClick={e =>{
+          e.preventDefault();
+          setCurrentPage("home");
+        }
+        } id="nav-home" key="nav-home" to="/">home</NavLink>}
+        {Object.keys(navInfo).map((key) => 
+        <NavLink className="navlink" onClick={e =>{
+          e.preventDefault();
+          setCurrentPage(key);
+        }
+        } id={`nav-${key}`} key={`nav-${key}`} to={`/${key}`}>{key}</NavLink>)}
       </NAV>
       <Header />
       <Switch>
         <Route exact path="/">
           <WelcomePage />
         </Route>
-        {Object.keys(navInfo).map((key) => 
-          <Route path={`/${key}`}>
-            <p>the route to {key}</p>
-          </Route>)}
+        <Route path="/characters">
+          <CharacterList history={history} endpoint={navInfo.characters} componentState={componentState} setComponentState={setComponentState} / >
+        </Route>
       </Switch>
     </main>
   );
