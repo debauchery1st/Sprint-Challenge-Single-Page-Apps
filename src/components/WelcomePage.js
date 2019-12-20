@@ -5,6 +5,7 @@ const H1 = styled.h1`
   display: block;
   font-family: 'Letter Gothic', sans-serif;
   font-weight: 500;
+  opacity: 90%
   letter-spacing: -.1rem;
   text-transform: uppercase;
   word-spaceing: -.3rem;
@@ -16,6 +17,7 @@ const IMG = styled.img`
     box-shadow: 0 9px 18px rgba(0, 0, 0, 0.3), 0 7px 6px rgba(0, 0, 0, 0.22);
   }
 `;
+
 const DIV = styled.div`
   display: flex;
   justify-content: space-evenly;

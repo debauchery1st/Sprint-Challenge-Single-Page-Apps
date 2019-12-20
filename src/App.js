@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import styled from 'styled-components';
 
-const NAV = styled.nav`
+const NAV = styled.div`
 `;
 
 const NAVIGATE = styled.button`
@@ -14,6 +14,7 @@ const NAVIGATE = styled.button`
   text-transform: uppercase;
   word-spaceing: -.3rem;
   opacity: 70%;
+  background-color: inherit;
   :hover, :active {
     opacity: 100%;
   }
@@ -30,6 +31,9 @@ export default function App() {
     locations: '',
     episodes: ''
   })
+
+  const [currentPage, setCurrentPage] = useState("Home");
+
   useEffect(()=> {
     axios.get(baseURL)
     .then(function (response) {
@@ -46,15 +50,25 @@ export default function App() {
       // always executed
     });
   }, []);
+  
+  const currentPageNav = document.getElementById(`nav-${currentPage}`);
+  if (!currentPage === null) currentPageNav.style.border = "1px dashed black";
+
+  useEffect(() => {
+    console.log(currentPage);    
+  }, [currentPage]);
 
   return (
     <main>
-      <NAV>
-        {<NAVIGATE key="nav-home">Home</NAVIGATE>}
-        {Object.keys(navInfo).map((key) => <NAVIGATE key={`nav-${key}`}>{key}</NAVIGATE>)}
+      <NAV id="navbar">
+        {<NAVIGATE id={`nav-home`} onClick={() =>setCurrentPage("home")} key="nav-home">Home</NAVIGATE>}
+        {Object.keys(navInfo).map((key) => <NAVIGATE onClick={() =>setCurrentPage(key)} id={`nav-${key}`} key={`nav-${key}`}>{key}</NAVIGATE>)}
       </NAV>
       <Header />
-      <WelcomePage nav={navInfo} />
+      {
+
+      }
+      <WelcomePage />
     </main>
   );
 }

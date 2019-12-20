@@ -5,6 +5,7 @@ const H1 = styled.h1`
   display: block;
   font-family: 'Letter Gothic', sans-serif;
   font-weight: 1000;
+  opacity: 90%
   letter-spacing: -.1rem;
   text-transform: uppercase;
   word-spaceing: -.3rem;
