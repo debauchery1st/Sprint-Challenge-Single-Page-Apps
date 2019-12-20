@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from "react";
+import {Switch, Route, Link} from 'react-router-dom';
 import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
 
 import axios from 'axios';
 
 import styled from 'styled-components';
+
 
 const NAV = styled.div`
 `;
@@ -25,14 +27,13 @@ const NAVIGATE = styled.button`
 export default function App() {
   const baseURL = 'https://rickandmortyapi.com/api/';
   // const baseURL = 'https://rick-api.herokuapp.com/api/';
-  // const [apiData, setApiData] = useState({})
+  const [currentPage, setCurrentPage] = useState("Home");
+  // const currentPageNav = document.getElementById(`nav-${currentPage}`);
   const [navInfo, setNavInfo] = useState({
     characters: '',
     locations: '',
     episodes: ''
-  })
-
-  const [currentPage, setCurrentPage] = useState("Home");
+  });
 
   useEffect(()=> {
     axios.get(baseURL)
@@ -49,10 +50,8 @@ export default function App() {
       console.log("finally");
       // always executed
     });
-  }, []);
-  
-  const currentPageNav = document.getElementById(`nav-${currentPage}`);
-  if (!currentPage === null) currentPageNav.style.border = "1px dashed black";
+  }, []);  
+
 
   useEffect(() => {
     console.log(currentPage);    
@@ -61,14 +60,19 @@ export default function App() {
   return (
     <main>
       <NAV id="navbar">
-        {<NAVIGATE id={`nav-home`} onClick={() =>setCurrentPage("home")} key="nav-home">Home</NAVIGATE>}
-        {Object.keys(navInfo).map((key) => <NAVIGATE onClick={() =>setCurrentPage(key)} id={`nav-${key}`} key={`nav-${key}`}>{key}</NAVIGATE>)}
+        {<NAVIGATE id={`nav-home`} onClick={() =>setCurrentPage("home")} key="nav-home"><Link to="/">Home</Link></NAVIGATE>}
+        {Object.keys(navInfo).map((key) => <NAVIGATE onClick={() =>setCurrentPage(key)} id={`nav-${key}`} key={`nav-${key}`}><Link to={`/${key}`}>{key}</Link></NAVIGATE>)}
       </NAV>
       <Header />
-      {
-
-      }
-      <WelcomePage />
+      <Switch>
+        <Route exact path="/">
+          <WelcomePage />
+        </Route>
+        {Object.keys(navInfo).map((key) => 
+          <Route path={`/${key}`}>
+            <p>the route to {key}</p>
+          </Route>)}
+      </Switch>
     </main>
   );
 }
