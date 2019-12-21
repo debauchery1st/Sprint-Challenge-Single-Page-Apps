@@ -28,6 +28,7 @@ export default function SearchForm(props) {
   }
   function onSumbitHandler(e) {
     const resultList= [];
+    // debugger
     console.log(`searching for : ${searchFor}!!!`);
     theState.forEach(character =>  {
       if (character.name.toLowerCase().includes(searchFor.toLowerCase())) resultList.push(character)

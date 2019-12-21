@@ -17,7 +17,6 @@ export default function App() {
   const baseURL = 'https://rickandmortyapi.com/api/';
   // const baseURL = 'https://rick-api.herokuapp.com/api/'; // backup URL
   const [currentPage, setCurrentPage] = useState("Home");
-
   const [componentState, setComponentState] = useState({});
   const [searchResults, setSearchResults] = useState([]);
   const [navInfo, setNavInfo] = useState({
@@ -67,22 +66,23 @@ export default function App() {
         }
         } id={`nav-${key}`} key={`nav-${key}`} to={`/${key}`}>{key}</NavLink>)}
       </NAV>
-      <Header />
       <SearchForm componentState={componentState} endpoint={navInfo.characters} setSearchResults={setSearchResults}/>
-      { 
-      searchResults.map(
-        cartoonCharacter => <CharacterCard key={`card-${cartoonCharacter.name}`} cardInfo={cartoonCharacter} / >)
-        }
+      <Header />
+      <div className="search-results">
+      {searchResults.map(cartoonCharacter => <CharacterCard key={`card-${cartoonCharacter.name}`} cardInfo={cartoonCharacter} / >)}
+      </div>
       <Switch>
         <Route exact path="/">
           <WelcomePage />
         </Route>
         <Route path="/characters">
-          <CharacterList history={history} endpoint={navInfo.characters} componentState={componentState} setComponentState={setComponentState} / >
+          <CharacterList 
+            history={history} 
+            endpoint={navInfo.characters} 
+            componentState={componentState} 
+            setComponentState={setComponentState} />
         </Route>
-      </Switch>
-
-
+      </Switch> 
     </main>
   );
 }
