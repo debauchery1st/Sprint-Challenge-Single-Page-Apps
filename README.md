@@ -25,9 +25,9 @@ In this challenge, you will create a Single Page Application complete with Clien
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question.
 
-- [ ]  Explain benefit(s) using `client-side routing`?
+- [✅]  Explain benefit(s) using `client-side routing`?
 
-> Answer:
+> Answer: helps carry the load so that the server can do its thing.
 
 ## Project Set Up
 
@@ -99,9 +99,9 @@ There's a range of difficulty in the options below. 😈
 
 Start with the most *familiar (or fun) sounding* stretch goal.
 Complete search component to your list views.
-- [ ] Try adding 2 more components and display data from the episodes and locations end point.
-- [ ] https://rickandmortyapi.com/api/location/ - docs
-- [ ] https://rickandmortyapi.com/api/episode/ - docs
+- [✅] Try adding 2 more components and display data from the episodes and locations end point.
+- [✅] https://rickandmortyapi.com/api/location/ - docs
+- [✅] https://rickandmortyapi.com/api/episode/ - docs
 
 - [ ]  Wire up the `onSearch(name)` callback prop to support [querying the API](https://rickandmortyapi.com/documentation/#filter-characters). (To search for `rick`, you would request `/api/character/?name=rick`.)
 - [ ]  Animate page transition and/or card loading.

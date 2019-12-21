@@ -5,6 +5,9 @@ import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
 import CharacterCard from './components/CharacterCard';
 import SearchForm from './components/SearchForm';
+import LocationList from './components/LocationsList';
+import EpisodeList from './components/EpisodeList';
+
 import axios from 'axios';
 
 import styled from 'styled-components';
@@ -17,7 +20,9 @@ export default function App() {
   const baseURL = 'https://rickandmortyapi.com/api/';
   // const baseURL = 'https://rick-api.herokuapp.com/api/'; // backup URL
   const [currentPage, setCurrentPage] = useState("Home");
-  const [componentState, setComponentState] = useState({});
+  const [charListState, setCharListState] = useState({});
+  const [locationListState, setLocationListState] = useState({});
+  const [episodeListState, setEpisodeListState] = useState({});
   const [searchResults, setSearchResults] = useState([]);
   const [navInfo, setNavInfo] = useState({
     characters: '',
@@ -43,7 +48,9 @@ export default function App() {
   }, []);  
   const historyBook = {
     home: "/",
-    characters: "/characters"
+    characters: "/characters",
+    locations: "/locations",
+    episodes: "/episodes"
   }
   useEffect(() => {
     console.log(currentPage);
@@ -66,7 +73,7 @@ export default function App() {
         }
         } id={`nav-${key}`} key={`nav-${key}`} to={`/${key}`}>{key}</NavLink>)}
       </NAV>
-      <SearchForm componentState={componentState} endpoint={navInfo.characters} setSearchResults={setSearchResults}/>
+      <SearchForm componentState={charListState} endpoint={navInfo.characters} setSearchResults={setSearchResults}/>
       <Header />
       <div className="search-results">
       {searchResults.map(cartoonCharacter => <CharacterCard key={`card-${cartoonCharacter.name}`} cardInfo={cartoonCharacter} / >)}
@@ -76,11 +83,25 @@ export default function App() {
           <WelcomePage />
         </Route>
         <Route path="/characters">
-          <CharacterList 
+          <CharacterList
             history={history} 
             endpoint={navInfo.characters} 
-            componentState={componentState} 
-            setComponentState={setComponentState} />
+            componentState={charListState} 
+            setComponentState={setCharListState} / >
+        </Route>
+        <Route path="/locations">
+          <LocationList
+            history={history}
+            endpoint={navInfo.locations}
+            componentState={locationListState} 
+            setComponentState={setLocationListState} / >
+        </Route>
+        <Route path="/episodes">
+          <EpisodeList
+            history={history}
+            endpoint={navInfo.episodes}
+            componentState={episodeListState} 
+            setComponentState={setEpisodeListState} / >
         </Route>
       </Switch> 
     </main>
