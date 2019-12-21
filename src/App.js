@@ -3,7 +3,8 @@ import {Switch, Route, NavLink, useHistory} from 'react-router-dom';
 import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
-
+import CharacterCard from './components/CharacterCard';
+import SearchForm from './components/SearchForm';
 import axios from 'axios';
 
 import styled from 'styled-components';
@@ -16,7 +17,9 @@ export default function App() {
   const baseURL = 'https://rickandmortyapi.com/api/';
   // const baseURL = 'https://rick-api.herokuapp.com/api/'; // backup URL
   const [currentPage, setCurrentPage] = useState("Home");
+
   const [componentState, setComponentState] = useState({});
+  const [searchResults, setSearchResults] = useState([]);
   const [navInfo, setNavInfo] = useState({
     characters: '',
     locations: '',
@@ -45,6 +48,7 @@ export default function App() {
   }
   useEffect(() => {
     console.log(currentPage);
+    setSearchResults([]);
     history.push(historyBook[currentPage] || "/");
   }, [currentPage]);
 
@@ -64,6 +68,11 @@ export default function App() {
         } id={`nav-${key}`} key={`nav-${key}`} to={`/${key}`}>{key}</NavLink>)}
       </NAV>
       <Header />
+      <SearchForm componentState={componentState} endpoint={navInfo.characters} setSearchResults={setSearchResults}/>
+      { 
+      searchResults.map(
+        cartoonCharacter => <CharacterCard key={`card-${cartoonCharacter.name}`} cardInfo={cartoonCharacter} / >)
+        }
       <Switch>
         <Route exact path="/">
           <WelcomePage />
@@ -72,6 +81,8 @@ export default function App() {
           <CharacterList history={history} endpoint={navInfo.characters} componentState={componentState} setComponentState={setComponentState} / >
         </Route>
       </Switch>
+
+
     </main>
   );
 }

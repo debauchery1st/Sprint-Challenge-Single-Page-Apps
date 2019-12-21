@@ -11,6 +11,7 @@ export default function CharacterList(props) {
     axios.get(props.endpoint)
     .then(function (response) {
       setTheState(response.data.results);
+      props.setComponentState(response.data.result);
     })
     .catch(function (error) {
       console.log(error);
