@@ -1,7 +1,7 @@
 import React from "react";
 import {randomKeyNumber} from './Styles';
 
-import {UL, LI, IMG} from './Styles';
+import {UL, LI} from './Styles';
 
 export default function EpisodeCard(props) {
   const {name, air_date, episode, characters, created} = props.cardInfo;

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Switch, Route, NavLink, useHistory} from 'react-router-dom';
+
 import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
@@ -21,7 +22,7 @@ export default function App() {
   const history = useHistory();
   const baseURL = 'https://rickandmortyapi.com/api/';
   // const baseURL = 'https://rick-api.herokuapp.com/api/'; // backup URL
-  const [currentPage, setCurrentPage] = useState("Home");
+  const [currentPage, setCurrentPage] = useState("home");
   const [charListState, setCharListState] = useState({});
   const [locationListState, setLocationListState] = useState({});
   const [episodeListState, setEpisodeListState] = useState({});
@@ -31,6 +32,16 @@ export default function App() {
     locations: '',
     episodes: ''
   });
+  const [toggle, setToggle] = useState(false);
+  //
+  const navMap = {
+    home: "/",
+    characters: "/characters",
+    locations: "/locations",
+    episodes: "/episodes"
+  };
+  const nextPage = navMap[currentPage] || "/";
+
   useEffect(()=> {
     axios.get(baseURL)
     .then(function (response) {
@@ -41,24 +52,24 @@ export default function App() {
     .catch(function (error) {
       // handle error
       console.log(error);
-    })
-    .finally(function () {
-      console.log("finally");
-      // always executed
     });
     return ()=>"goodbye!";
-  }, []);  
-  const historyBook = {
-    home: "/",
-    characters: "/characters",
-    locations: "/locations",
-    episodes: "/episodes"
-  }
+  }, []);
+
   useEffect(() => {
-    console.log(currentPage);
-    setSearchResults([]);
-    history.push(historyBook[currentPage] || "/");
-  }, [currentPage]);
+    if (toggle) {
+      // debugger
+      setToggle(false);
+      history.push(nextPage);
+    }
+  }, [toggle, history, nextPage]);
+
+  // const loadPage = () => history.push(nextPage);
+  const clearResults = () => setSearchResults([]);
+  useEffect(() => {
+    clearResults();
+    setToggle(true);
+  }, [nextPage]);
 
   return (
     <main>

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {Formik, Form, Field} from 'formik';
 import axios from 'axios';
-export default function SearchForm(props) {
+export default function SearchForm({endpoint, setComponentState, setSearchResults}) {
   const [searchFor, setSearchFor] = useState("");
   const [theState, setTheState] = useState({});
   useEffect(() => {
-    axios.get(props.endpoint)
+    axios.get(endpoint)
     .then(function (response) {
       setTheState(response.data.results);
-      props.setComponentState(response.data.result);
+      // setComponentState(response.data.result);
     })
     .catch(function (error) {
       console.log(error);
@@ -20,7 +20,7 @@ export default function SearchForm(props) {
     }
     // TODO: Add API Request here - must run in `useEffect`
     //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
-  }, [props.endpoint]);
+  }, [endpoint, setComponentState]);
 
   function changeHandler(e) {
     setSearchFor(e.target.value);
@@ -34,7 +34,7 @@ export default function SearchForm(props) {
       if (character.name.toLowerCase().includes(searchFor.toLowerCase())) resultList.push(character)
     });
     console.log(resultList);
-    props.setSearchResults(resultList)
+    setSearchResults(resultList)
   }
 
   return (
