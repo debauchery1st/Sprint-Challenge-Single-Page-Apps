@@ -7,7 +7,7 @@ export default function CharacterCard2(props){
   const height = (!props.height) ? '24rem':props.height;  // set a default height
   const cardInfo = props.cardInfo;
   const showUser = [cardInfo.name, cardInfo.species, cardInfo.status];
-  
+  const backBkg = {alive: "#5f9fdd", dead: "#000", unknown: "purple"}[cardInfo.status.toLowerCase()] || "brown";
   const CardContainer = style.div`
   display: inline-block;
   opacity: 90%;
@@ -45,7 +45,7 @@ export default function CharacterCard2(props){
   `;
   const CardBack = style.div`
     position: absolute;
-    background: #5f9fdd;
+    background: ${backBkg};
     top: 0;
     left: 0;
     width: ${width};
@@ -81,14 +81,14 @@ export default function CharacterCard2(props){
     font-size: .8rem;
   `;
   return(
-    <CardContainer key={props.key}>
+    <CardContainer>
     <Card>
       <CardFront>
         <CardFrontText><IMG src={cardInfo.image}></IMG></CardFrontText>
         <br />
         <CardFrontText>{cardInfo.name}</CardFrontText>
       </CardFront>
-      <CardBack>
+      <CardBack status={cardInfo.status}>
         <CardBackText>
             <IMG src={cardInfo.image} width="50%" />
             <UL>{showUser.map((info, idx) => <LI key={`${cardInfo.name}-${randomKeyNumber()}`}>{info}</LI>)}</UL>

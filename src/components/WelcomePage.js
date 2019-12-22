@@ -20,6 +20,7 @@ const IMG = styled.img`
 
 const DIV = styled.div`
   display: flex;
+  flex-flow: row wrap-reverse;
   justify-content: space-evenly;
 `;
 
