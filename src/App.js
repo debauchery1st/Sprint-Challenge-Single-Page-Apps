@@ -45,12 +45,9 @@ export default function App() {
   useEffect(()=> {
     axios.get(baseURL)
     .then(function (response) {
-      // handle success
       setNavInfo(response.data);
-      console.log(response);
     })
     .catch(function (error) {
-      // handle error
       console.log(error);
     });
     return ()=>"goodbye!";
