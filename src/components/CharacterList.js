@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {randomKeyNumber} from './Styles';
-import CharacterCard from './CharacterCard';
+// import CharacterCard from './CharacterCard';
+import CharacterCard from './CharacterCard2';
 
 export default function CharacterList({endpoint, setComponentState}) {
   const [theState, setTheState] = useState({});

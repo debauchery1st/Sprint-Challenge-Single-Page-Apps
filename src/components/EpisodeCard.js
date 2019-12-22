@@ -4,7 +4,7 @@ import {randomKeyNumber} from './Styles';
 import {UL, LI, IMG} from './Styles';
 
 export default function EpisodeCard(props) {
-  const {name, air_date, episode, characters, url, created} = props.cardInfo;
+  const {name, air_date, episode, characters, created} = props.cardInfo;
   return (
     <UL>
         <LI key={`${name}-${randomKeyNumber()}`}>{name}</LI>
@@ -12,7 +12,6 @@ export default function EpisodeCard(props) {
         <LI key={`${created}-${randomKeyNumber()}`}>created: {created}</LI>
         <LI key={`summary-${randomKeyNumber()}`}>summary: {episode}</LI>
         <LI key={`characters-${randomKeyNumber()}`}>starring: {characters}</LI>
-        <LI key={`url-${randomKeyNumber()}`}>url: {url}</LI>
     </UL>
   );
 }

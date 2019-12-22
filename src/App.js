@@ -3,7 +3,7 @@ import {Switch, Route, NavLink, useHistory} from 'react-router-dom';
 import Header from "./components/Header.js";
 import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
-import CharacterCard from './components/CharacterCard';
+import CharacterCard from './components/CharacterCard2';
 import SearchForm from './components/SearchForm';
 import LocationList from './components/LocationsList';
 import EpisodeList from './components/EpisodeList';
