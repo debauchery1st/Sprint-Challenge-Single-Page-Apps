@@ -16,7 +16,7 @@ export default function SearchForm({endpoint, setComponentState, setSearchResult
     .finally(function () {
     });
     return () => {
-      console.log("goodbye!");
+      console.log("thanks for searching with Rick and Morty!");
     }
     // TODO: Add API Request here - must run in `useEffect`
     //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
@@ -24,16 +24,16 @@ export default function SearchForm({endpoint, setComponentState, setSearchResult
 
   function changeHandler(e) {
     setSearchFor(e.target.value);
-    console.log(`searching for : ${e.target.value}`)
+    // console.log(`searching for : ${e.target.value}`)
   }
   function onSumbitHandler(e) {
     const resultList= [];
     // debugger
-    console.log(`searching for : ${searchFor}!!!`);
+    // console.log(`searching for : ${searchFor}!!!`);
     theState.forEach(character =>  {
       if (character.name.toLowerCase().includes(searchFor.toLowerCase())) resultList.push(character)
     });
-    console.log(resultList);
+    // console.log(resultList);
     setSearchResults(resultList)
   }
 
